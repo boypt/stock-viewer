@@ -1,0 +1,679 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<style type="text/css">
+	html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{border:0;font-size:100%;font:inherit;margin:0;padding:0;vertical-align:baseline}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}ol,ul{list-style:none}blockquote,q{quotes:none}table{border-collapse:collapse;border-spacing:0}input{border:0;margin:0;padding:0}
+
+	body{color:#777;font-size:14px;font-family:"Microsoft yahei",Hei,arial,sans-serif}a{color:#36c;text-decoration:none}h1,h2{color:#000}
+</style>
+<style type="text/css">
+	.gclearfix{
+		zoom: 1;
+	}
+	.gclearfix:after{
+		display: block;
+		clear: both;
+		visibility: hidden;
+		height: 0;
+		content: '';
+	}
+	input{
+		outline: none;
+	}
+	.search{
+		display: -webkit-box;
+		padding : 5px;
+		z-index: 99;
+	}
+	.search input{
+		display: block;
+		-webkit-box-flex:1;
+		width: 100%;
+		height: 28px;
+		padding: 0 15px;
+		font-size: 16px;
+	}
+	.search-input{
+		-webkit-box-flex:1;
+		display: block;
+		border: 1px solid #87a7cd;
+		border-radius: 2px 0 0 2px;
+	}
+	.sug-mask{
+		position: relative;
+		display: -webkit-box;
+		background: #fff;
+		z-index: 100;
+	}
+
+	.sug{
+		display: none;
+		position: absolute;
+		left: 0;
+		width: 100%;
+		-webkit-box-sizing:border-box;
+		border: 1px solid #84b890;
+		background-color: #fff;
+	}
+	.sug .sug-item{
+		position: relative;
+		padding: .5em 40px .5em 10px;
+		border-bottom: 1px solid #eee;
+	}
+	.sug .sug-plus{
+		position: absolute;
+		top: 0;
+		right: 0;
+		width: 52px;
+		height:100%;
+	}
+	.sug .sug-plus:after {
+		content: '+';
+		color: #b4b4b4;
+		line-height: 1;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		margin-top: -13px;
+		margin-left: -8px;
+		font-size: 24px;
+	}
+	.sug .sug-button {
+		background: #f7f7f7;
+		height: 33px;
+		line-height: 33px;
+	}
+	.sug .sug-clear,.sug .sug-close {
+		padding: 0 15px;
+		cursor: pointer;
+	}
+	.sug .sug-clear{
+		float: left;
+		border-right: 1px solid #eee;
+	}
+	.sug .sug-close{
+		float: right;
+		border-left: 1px solid #eee;
+	}
+	.sug-quickdel{
+		display: none;
+		width: 18px;
+		height: 18px;
+		padding: 4px;
+		background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAiCAYAAAA6RwvCAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAvNJREFUeNrMmL+PEkEUx4fFAw5EbfQChMJAAZqcxuYaG3ONOe1stDfxP/AsLU8b/QO0viu0O43NxUZjaC6G5AKBvRgCzXEUePJ7IfE98nZvWHZmhx9rfMm3Yd7M+7DzZubN+HK5HPsf7MKM/hdBD0D3QLdB10GXqe036BfoJ+gr6BOotWyQNGgb9AQUEfhcI22AnoHaoF3QK5DuFkBzaQ+BdkBHoKcSCCeLUJ8jggnNC5IC/aAvEVhg+rHvcxorPSvIHdB3yoNlGY71jcZWAkHqL6A1DxbHGo2ddgNZBX0AXfVwpeLYHymWEOQl6NY/2DbWKZZlPm5Dw+QsgFbsvWKxGEskEqzb7bJyucwGg4E8OwMBlkqlWDgcZtVqldXrdSc3A3TDXNr8F3nhBIEWj8eZpmksEomwbDY7DiSDyGQyLBqNMr/fz5LJpMh1hWJOTE2UNitHwy9hWjAYFMKYEKHQ+ZbRbrdlH+8xxbZAtmSbla7rrNfrSWGcIPAPYF+XTW+LB9mUeWNOFItFIYwIolAosOFw6Ja4mzzIupu3DMYJAn0VIKzYGrdi2LwwThCGYagu5RQPckm1F8LgJ+dhTMPfZoSwYmvz7EY+n0/4u6hNtQw4Uz5KHRJTZWlL7IwHOZ4XAqdDdZ8R2DEPkleBwAB2CMwJ1AIweR7kQAUCA9ghMHkxOReAOeBBPlON6VywptNCCOsEAxhcTZ1OZwIGDz+JdSi2BfIHtCfyXl09Lx36/f4UhGm4gWGbHUZiuxR7Yvnu0NE8ZZVKhY1GI9Zqtcb/WlYGmDDNZnPsV6vVRK4GFdVT1wk8nd5QoTthjUZjLFVDmFKp5Ob2FlSWVWh55r3l7RWaHQTT/hHo1EOIU4rRcavicYrug048gDihsXXVe80h6O6SpylPYx7OetPT6R77WrSaFM2gMTZkd2C307dHV86boHf2eXUxzLf31HebxhKf6DO+j+CzxEPbs8QVamvaniX2vXiWMK1FO/DesrP4rwADAKUsNqKpueWJAAAAAElFTkSuQmCC) center center no-repeat;
+		background-size: 20px 20px;
+	}
+	.search-button{
+		border: 1px solid #87a7cd;
+		border-left: 0;
+		border-radius: 0 2px 2px 0;
+	}
+	.search-button input{
+		padding: 0 10px;
+		line-height: 28px;
+		font-size: 16px;
+		font-weight: bold;
+		vertical-align: middle;
+		-webkit-appearance:none;
+	}
+</style>
+<style type="text/css">
+	body{
+		width:500px;
+		height:400px;
+	}
+	.sug .sug-item{
+		padding:.5em 10px;
+	}
+	.sug .sug-item span{
+		display:inline-block;
+		margin-right:15px;
+		white-space:nowrap;
+		overflow:hidden;
+		text-overflow:ellipsis;
+	}
+	.sug .sug-item .key{
+		width:55px;
+	}
+	.sug .sug-item .name{
+		width:70px;
+	}
+	.sug .sug-item .pinyin{
+		width:50px;
+	}
+
+
+	.search{width:310px;}
+	/*.zxg-stock a{
+		padding:0 10px;
+	}*/
+	.sug-list .hover{background:#f0f0f0;}
+
+	/* tab切换 */
+	.nav-tabs{
+		height:30px;
+		border-bottom:solid 1px #ddd;
+	}
+	.nav-tabs li{
+		float:left;
+		height:30px;
+		line-height:30px;
+	}
+	.nav-tabs .on{
+		border:solid 1px #ddd;
+		border-bottom-color:transparent;
+		background:white;
+		-webkit-border-radius:4px 4px 0 0;
+		border-radius:4px 4px 0 0;
+		margin-bottom:-1px;
+	}
+	.nav-tabs li a{padding:0 12px;}
+
+	.tab-content .tab-pane{
+		display:none;
+		margin:10px 7px;
+	}
+	.tab-content .on{
+		display:block;
+	}
+	/* 自选股 */
+	#zxg{
+		position:relative;
+	}
+	.loading{
+		position:absolute;
+		z-index:10;
+		width:100%;
+		text-align:center;
+		padding:145px 0;
+		background:white;
+		opacity:0.5;
+	}
+	.zxg-stock .zxg-hd{
+		height:30px;
+		line-height:30px;
+	}
+	.zxg-stock .zxg-bd{
+		position:relative;
+		height:300px;
+		overflow-y:scroll;
+	}
+	.zxg-stock .increase{
+		color:red;
+	}
+	.zxg-stock .reduce{
+		color:#009900;
+	}
+	.zxg-stock span{
+		display:inline-block;
+		float:left;
+	}
+	.zxg-stock li{
+		position:relative;
+		height:28px;
+		line-height:28px;
+		border:solid 1px transparent;
+		border-bottom-color:#e4e4e4;
+	}
+	.zxg-stock li .trendImg{
+		position:absolute;
+		height:80px;
+		width:auto;
+		top:26px;
+		left:120px;
+		z-index:2;
+		background:white;
+		border:solid 2px #e8e8e8;
+	}
+	.zxg-stock span{
+		text-align:right;
+	}
+	.zxg-stock .top{
+		width:30px;
+		cursor:pointer;
+		opacity:0;
+	}
+	.zxg-stock .remark{
+		width:45px;height:100%;cursor:pointer;
+	}
+	.zxg-stock .name{width:130px;height:28px;overflow:hidden;}
+	.zxg-stock .price{width:70px;}
+	.zxg-stock .grow{width:70px;}
+	.zxg-stock .hands{width:70px;}
+	.zxg-stock .delete{
+		width:45px;
+	}	
+	.zxg-stock .zxg-list .remark,
+	.zxg-stock .zxg-list .delete,
+	.zxg-stock .zxg-list .remarked{
+		background-image:url(images/icon.png);
+		background-repeat:no-repeat;
+	}
+	.zxg-stock .zxg-list .remark{
+		height:18px;
+		width:18px;
+		text-align:left;
+		text-indent:-999em;
+		margin:5px 10px 0 22px;
+		border:solid 1px transparent;
+		background-position:-7px -28px;
+	}
+	.zxg-stock .zxg-list .delete:hover,
+	.zxg-stock .zxg-list .remark:hover{
+		border:solid 1px #7cafdc;
+		background-color:#b9dfff;
+	}
+	.zxg-stock .zxg-list .remarked{
+		/*width:10px;
+		height:10px;*/
+		/*background-image:none;
+		background-color:red;*/
+		/*border-radius:10px;
+		margin:5px 15px 0 25px;*/
+		background-position:-7px -74px;
+	}
+	.zxg-stock .zxg-list .remarked:hover{
+
+	}
+
+	.zxg-stock .zxg-list .delete{
+		display:inline-block;
+		height:18px;
+		width:18px;
+		margin:5px 11px 0;
+		background-position:-6px -52px;
+		text-indent:-999em;
+		border:solid 1px transparent;
+	}
+	/*.zxg-stock .zxg-hd .remark,
+	.zxg-stock .zxg-hd .delete{
+		background:none;
+		text-indent:0;
+	}*/
+	/*.zxg-stock .zxg-hd .delete{
+		margin:0;
+		width:45px;
+		height:100%;
+		border:0;
+		text-align:center;
+	}*/
+
+	.zxg-list{
+		border-top:solid 1px #e4e4e4;
+	}
+	.zxg-list li.hover{
+		background-color:#e2effa;
+	}
+	.zxg-list li:hover .top{
+		opacity:1;
+	}
+	.zxg-stock .tipStock{
+		display:none;
+		position:absolute;
+		top:50px;
+		left:50%;
+		margin-left:-75px;
+		width:200px;
+		height:60px;
+		line-height:60px;
+		text-align:center;
+		background:#F5EF83;
+		opacity:0.8;
+		border:1px solid #BFBA66;
+		box-shadow:0 1px 4px rgba(49, 49, 64, .1);
+		font-weight:bold;
+		font-size:16px;
+	}
+	.zxg-stock .tipStock .ok{
+		position:absolute;
+		top:20px;
+		left:10px;
+		width:30px;
+		height:20px;
+	}
+	/* 微信公众号 */
+	.weixin{
+		overflow:hidden;
+	}
+	.weixin .item{
+		height:95px;
+		overflow:hidden;
+		border-top:dashed 1px #e8e8e8;
+		margin-top:-1px;
+	}
+	.weixin .item .img{
+		float:left;
+		/*width:150px;*/
+		padding-right:10px;
+		/*height:150px;*/
+	}
+	.weixin .item img{
+		width:90px;
+		height:auto;
+	}
+	.weixin .item .info{
+		float:left;
+		width:300px;
+		padding-top:15px;
+	}
+	.weixin .item .info .title{
+		display:block;
+		height:24px;
+		font-size:16px;
+		font-weight:bold;
+	}
+	.weixin .item .info .intro{
+		display:block;
+	}
+	/* 推荐 */
+	.stockList{
+		overflow:hidden;
+		border:solid 1px #e8e8e8;
+		border-style:solid;
+		border-width:1px;
+		border-color:#54b82a transparent #54b82a transparent;
+	}
+	.stockList .item{
+		overflow:hidden;
+		border-top:dashed 1px #e8e8e8;
+		margin-top:-1px;
+		padding:0 10px;
+	}
+	.stockList .item span{
+		float:left;
+		display:inline-block;
+		height:28px;
+		line-height:28px;
+	}
+	.stockList .item .title{
+		width:140px;
+	}
+	.stockList .item .rating,
+	.stockList .item .rating em{
+		background-image:url(images/star.png);
+		background-repeat:no-repeat;
+	}
+	.stockList .item .rating{
+		width:60px;
+		height:12px;
+		overflow:hidden;
+		background-position:0 -15px;
+		margin-top:8px;
+		margin-right:20px;
+	}
+	.stockList .item .rating em{
+		display:inline-block;
+		width:40px;
+		background-position:0 -1px;
+		text-indent:-999em;
+	}
+	.stockList .item .type{
+		padding-right:15px;
+		width:50px;
+		max-width:70px;
+		overflow:hidden;
+	}
+	.stockList .item .topic{
+		max-width:155px;
+		overflow:hidden;
+		white-space:nowrap;
+		text-overflow:ellipsis;
+	}
+	.stockList .item .reason{
+		float:left;
+		width:100%;
+		height:28px;
+		line-height:28px;
+		border-top:dashed 1px #e8e8e8;
+		overflow:hidden;
+		white-space:nowrap;
+		text-overflow:ellipsis;
+	}
+	.stockList .head{
+		border-top:none;
+		color: #33940A;
+		font-weight: bold;
+	}
+	.stockList .head .rating{
+		height:100%;
+		margin-top:0;
+		background:none;
+	}
+	
+	.zxg-list .ui-state-highlight{
+		background:none;
+		border:1px solid #fed22f;
+	}
+	.zxg-list .ui-sortable-helper{
+		background-color:rgb(255, 255, 255);
+		border:dotted 1px red;
+	}
+
+	.remark-form{
+		display:none;
+		position:absolute;
+		top:50%;
+		left:50%;
+		z-index:200;
+		width:300px;
+		height:200px;
+		margin-left:-150px;
+		margin-top:-100px;
+		border:solid 1px #333;
+		background:white;
+
+		border-radius:5px;
+	}
+	.remark-form .remark-hd{
+		height: 30px;
+		border-bottom: solid 1px #166;
+		line-height: 30px;
+		padding: 5px;
+	}
+	.remark-form textarea{
+		width:250px;
+		height:80px;
+		margin:10px 25px;
+	}
+	.remark-form .btn{
+		width: 100px;
+		height: 40px;
+		text-align: center;
+		font-size: 24px;
+		border-radius:5px;
+		background:#666;
+		cursor:pointer;
+		color:white;
+		margin-left:100px;
+	}
+	.remark-form .close{
+		position:absolute;
+		top:0;
+		right:0;
+		width:20px;
+		height:20px;
+		font-size:16px;
+		cursor:pointer;
+	}
+	.mask{
+		display:none;
+		position:absolute;
+		top:0;
+		left:0;
+		z-index:101;
+		width:100%;
+		height:100%;
+		opacity:0.8;
+		background:#333;
+		opacity:0.5;
+	}
+	#warning{
+		display:none;
+		position:absolute;
+		width:540px;
+		left:7px;
+		top:78px;
+		color: #8a6d3b;
+		background-color: #fcf8e3;
+		border:1px solid #faebcc;
+		padding:5px 15px;
+		border-radius:4px;
+	}
+
+
+	#setting{
+		display:none;
+		position:absolute;
+		top:50%;
+		left:50%;
+		z-index:201;
+		width:400px;
+		height:300px;
+		margin-left:-200px;
+		margin-top:-150px;
+		border-radius:5px;
+		background:white;
+	}
+	#setting .title{
+		margin:15px 0 0 10px;
+	}
+	#setting .iconlist .icon{
+		display:inline-block;
+		border:solid 2px transparent;
+		margin: 10px 14px 0;
+		border-radius:4px;
+		background:#D0CBCB;
+	}
+	#setting .iconlist .icon img{
+		height:48px;
+		width:48px;
+	}
+	#setting .iconlist .cur,
+	#setting .iconlist .icon:hover{
+		border-color:#B5AFAF;
+	}
+	#setting .close{
+		position:absolute;
+		top:3px;
+		right:3px;
+		width:30px;
+		height:30px;
+		line-height:30px;
+		text-align: center;
+		background:#CECBCB;
+		font-size: 22px;
+		cursor:pointer;
+		border-radius: 15px;
+	}
+	#setting .default{
+		position: absolute;
+		top:15px;
+		left:160px;
+	}
+	.fade{
+		animation:fade 1s forwards;
+		border-width:1px;
+		border-style: solid;
+	}
+	@keyframes fade{
+		0%{
+			border-color: transparent;
+			border-bottom-color:#e4e4e4;
+		}
+		50%{
+			border-color:red;
+		}
+		100%{
+			border-color:transparent;
+			border-bottom-color: #e4e4e4;
+		}
+	}
+</style>
+<link rel="stylesheet" href="jquery-ui.css">
+	</head>
+	<body>
+		<!-- <a href="#" class="setting">设置</a> -->
+		<div id="setting">
+			<div class="title">选择浏览器显示图标</div>
+			<div class="iconlist"></div>
+			<span class="close">X</span>
+			<a href="#" class="default">使用默认图标</a>
+		</div>
+		<ul class="nav-tabs">
+			<li class="tab on" data-type="default"><a href="#">我的自选</a></li>
+			<li class="tab"><a href="http://lhb.stock360.cn" target="_blank">龙虎榜</a></li>
+			<li class="tab"><a href="http://lhb.stock360.cn/dz" target="_blank">破定增价股</a></li>
+			<li class="tab"><a href="#" class="setting">个人设置</a></li>
+		</ul>
+		<div class="tab-content">
+			<div class="tab-pane on">
+				<form id="search" action="http://www.so.com/s" method="get" target="_self">
+					<div class="search">
+						<div class="search-input">
+							<input type="text" id="input" name="q" placeholder="代码/名称/拼音">
+						</div>
+						<div class="search-button">
+							<input type="submit" value="搜索">
+						</div>
+					</div>
+				</form>
+				<div id="zxg">
+					<div class="loading"><img src="images/loading.gif" alt=""></div>
+					<div class="zxg-stock">
+						<div class="zxg-hd gclearfix">
+							<span class="top">置顶</span>
+							<span class="name">名称(代码)</span>
+							<span class="price">最新价</span>
+							<span class="grow">涨跌幅</span>
+							<span class="hands">换手率</span>
+							<span class="remark">备注</span>
+							<span class="delete">删除</span>
+						</div>
+						<div class="zxg-bd">
+							<ul class="zxg-list">
+							</ul>							
+						</div>
+						<div class="tipStock"><span class="ok"></span>列表保存已成功</div>
+					</div>
+				</div>				
+			</div>
+			<div class="tab-pane">
+				<ul class="stockList">
+					<li class="item head">
+						<span class="title">股票名称(代码)</span>
+						<span class="rating">推荐星级</span>
+						<span class="type">类型</span>
+						<span class="topic">概念</span>
+					</li>					
+				</ul>
+			</div>
+			<div class="tab-pane">
+				<ul class="weixin" id="weixin">
+					
+				</ul>			
+			</div>
+		</div>
+
+		<div class="remark-form">
+			<div class="remark-hd">
+				<span class="name"></span>(<span class="code"></span>) 当前股价:<span class="price"></span>
+				<span class="close">X</span>
+			</div>
+			<div class="remark-bd">
+				<textarea id="remark" placeholder="请输入您的购入理由和目标价位..."></textarea>
+				<input type="hidden" id="remark-key" value="">
+				<input type="button" class="btn" value="提交">
+			</div>
+		</div>
+		<div class="mask"></div>
+		<div id="warning" ></div>
+	</body>
+	<script src="jquery_1102.js"></script>
+	<script src="jquery-ui.js"></script>
+	<script src="monitor.js"></script>
+	<script src="util.js"></script>
+	<script src="suggest.js"></script>
+	<script src="stock.js"></script>
+	<script src="app.js"></script>
+</html>
