@@ -2,7 +2,9 @@
 
 	// 初始化指数数据
 	(function(){
-		if(!!localStorage.getItem('stock_list')){
+		var stock_list_data = localStorage.getItem('stock_list');
+		$("#importexport_code").val(stock_list_data || '');
+		if(!!stock_list_data){
 			return;
 		}
 		var data = [
@@ -44,9 +46,37 @@
 				localStorage.removeItem('stock_icon');
 				chrome.browserAction.setIcon({path: 'images/logo48.png'});
 			});
+
+			$(".importexport").on('click', function(e){
+				$("#importexport").show();
+				$('.mask').toggle();
+			});
+
+			$("#importexport").delegate('.close', 'click', function(e){
+				$('#importexport').hide();
+				$('.mask').toggle();
+			});
+
+			$("#importexport_confirm").click(function (e) {
+				var textdata = $("#importexport_code").val();
+				try {
+					var tmp = JSON.parse(textdata);
+					if (typeof(tmp['value']) != 'object') {
+						alert('array error');
+						return;
+					};
+					console.log(tmp);
+				} catch (e) {
+					alert(e);
+					return;
+				}
+				localStorage.setItem('stock_list', textdata);
+				window.close();
+			});
 		}
 		renderIconHtml();
 		bindEvent();
+
 	})();
 
 

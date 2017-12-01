@@ -522,7 +522,7 @@
 	}
 
 
-	#setting{
+	.alertlayer {
 		display:none;
 		position:absolute;
 		top:50%;
@@ -535,7 +535,7 @@
 		border-radius:5px;
 		background:white;
 	}
-	#setting .title{
+	.alertlayer  .title{
 		margin:15px 0 0 10px;
 	}
 	#setting .iconlist .icon{
@@ -553,7 +553,7 @@
 	#setting .iconlist .icon:hover{
 		border-color:#B5AFAF;
 	}
-	#setting .close{
+	.alertlayer  span.close{
 		position:absolute;
 		top:3px;
 		right:3px;
@@ -589,12 +589,30 @@
 			border-bottom-color: #e4e4e4;
 		}
 	}
+
+	#importexport_code { 
+		width: 100%;
+		font-family: monospace;
+		font-size: 0.5em;
+	}
+
+	.alertlayer .controls {
+		padding: 10px;
+	}
 </style>
 <link rel="stylesheet" href="jquery-ui.css">
 	</head>
 	<body>
-		<!-- <a href="#" class="setting">设置</a> -->
-		<div id="setting">
+		<div class="ui-widget alertlayer" id="importexport">
+			<div class="title ui-widget">复制粘贴以下代码完成导出导入</div>
+			<span class="close">X</span>
+			<div class="controls">
+				<textarea class="ui-widget ui-state-default ui-corner-all" id="importexport_code" rows="15"></textarea>
+				<button class="ui-widget ui-state-default ui-corner-all" id="importexport_confirm">确定</button>
+				<button class="ui-widget ui-state-default ui-corner-all close">取消</button>
+			</div>
+		</div>
+		<div class="alertlayer" id="setting">
 			<div class="title">选择浏览器显示图标</div>
 			<div class="iconlist"></div>
 			<span class="close">X</span>
@@ -605,6 +623,7 @@
 			<li class="tab"><a href="http://lhb.stock360.cn" target="_blank">龙虎榜</a></li>
 			<li class="tab"><a href="http://lhb.stock360.cn/dz" target="_blank">破定增价股</a></li>
 			<li class="tab"><a href="#" class="setting">个人设置</a></li>
+			<li class="tab"><a href="#" class="importexport">导出导入</a></li>
 		</ul>
 		<div class="tab-content">
 			<div class="tab-pane on">
