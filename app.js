@@ -1,18 +1,4 @@
 ;(function($,undefined){
-	// 获取显示类型，存储在本地
-	var url = 'http://www.stock360.cn/types.json';
-	utils.ajax(url, function(ret){
-		if(!ret){
-			return;
-		}
-		var data = JSON.parse(ret);
-		for(var key in data){
-			if(!!data[key]){
-				localStorage.setItem('stock_' + key, data[key]);
-			}
-		}
-	});
-
 
 	// 初始化指数数据
 	(function(){
@@ -92,7 +78,6 @@
 			}
 			console.log(queryObj);
 			Stock.addStock(queryObj);
-			logSender(window.clkUrl + '?code=' + arr[1]);
 		},
 		isCache : false
 	});
