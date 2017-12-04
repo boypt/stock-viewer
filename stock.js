@@ -126,37 +126,11 @@
 	window.LocalData = LocalData;
 })(jQuery);
 
-var stockType = localStorage.getItem('stock_type') || '';
-
 // 根据不同类型的代码，生成不同的url
 function getLinkUrl(obj){
-	var linkUrl = '',
-		imgUrl = '';
-
-	switch(obj.type){
-		case "ZS": 	//指数
-			linkUrl = 'http://gu.qq.com/'+ obj.key +'/zs';
-			break;
-		case "GP-A": //股票
-		case undefined:
-			linkUrl = 'http://gu.qq.com/'+ obj.key +'/gp';
-			break;
-		default:   // 基金
-			linkUrl = 'http://gu.qq.com/' + obj.key;
-			break;
-	}
-
-	var baseImgUrl = 'http://img2.gtimg.cn/images/hq_parts_little4/hushen/';
-	var localBaseImgUrl = localStorage.getItem('stock_imgUrl');
-	if(localBaseImgUrl && localBaseImgUrl != "undefined"){
-		baseImgUrl = localBaseImgUrl;
-	}
-	if(obj.type == "ZS"){
-		imgUrl = baseImgUrl + 'indexs/' + obj.code + '.png';
-	}else if(obj.type == "GP-A" || obj.type == "FJ-CX" || obj.type == ""){
-		imgUrl = baseImgUrl + 'stocks/' + obj.code + '.png'
-	}
-
+	var linkUrl = '', imgUrl = '';
+        linkUrl = 'http://gu.qq.com/' + obj.key;
+	imgUrl = 'http://imgnode.gtimg.cn/hq_img?code='+obj.key+'&type=minute&size=3&proj=news';
 	return {
 		linkUrl : linkUrl,
 		imgUrl : imgUrl
