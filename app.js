@@ -48,6 +48,8 @@
 			});
 
 			$(".importexport").on('click', function(e){
+				var stock_list_data = localStorage.getItem('stock_list');
+				$("#importexport_code").val(stock_list_data || '');
 				$("#importexport").show();
 				$('.mask').toggle();
 			});
@@ -61,15 +63,17 @@
 				var textdata = $("#importexport_code").val();
 				try {
 					var tmp = JSON.parse(textdata);
-					if (typeof(tmp['value']) != 'object') {
+					console.log(tmp);
+
+					if (typeof(tmp['value']) !== 'object') {
 						alert('array error');
 						return;
 					};
-					console.log(tmp);
 				} catch (e) {
 					alert(e);
 					return;
 				}
+
 				localStorage.setItem('stock_list', textdata);
 				window.close();
 			});
