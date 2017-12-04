@@ -135,30 +135,14 @@ function getLinkUrl(obj){
 
 	switch(obj.type){
 		case "ZS": 	//指数
-			// linkUrl =  'http://stockhtm.finance.qq.com/hqing/zhishu/' + obj.code + '.htm';
-			if(stockType == '2'){
-				linkUrl = 'http://www.stock360.cn/detail.html?code=' + obj.key;
-			}else if(stockType == '3'){
-				linkUrl = 'http://www.stock360.cn/' + obj.key;
-			}else{
-				linkUrl = 'http://gu.qq.com/'+ obj.key +'/zs';
-			}
+			linkUrl = 'http://gu.qq.com/'+ obj.key +'/zs';
 			break;
 		case "GP-A": //股票
 		case undefined:
-			// linkUrl = 'http://stockhtm.finance.qq.com/sstock/ggcx/' +　obj.code + '.shtml';
-			if(stockType == '2'){
-				linkUrl = 'http://www.stock360.cn/detail.html?code=' + obj.key;
-			}else if(stockType == '3'){
-				linkUrl = 'http://www.stock360.cn/' + obj.key;
-			}else{
-				linkUrl = 'http://gu.qq.com/'+ obj.key +'/gp';
-			}
-
+			linkUrl = 'http://gu.qq.com/'+ obj.key +'/gp';
 			break;
 		default:   // 基金
-			linkUrl = 'http://stockhtm.finance.qq.com/fund/djj_jjcx/' + obj.code + '.htm';
-			// linkUrl = 'http://gu.qq.com/' + utils.buildCode(obj.code);
+			linkUrl = 'http://gu.qq.com/' + obj.key;
 			break;
 	}
 
