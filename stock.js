@@ -392,8 +392,8 @@ function getLinkUrl(obj){
 				}
 				timerTrend = setTimeout(function(){
 					var style = '';
-					if($parent.height()+$parent.position().top+80>$(".zxg-bd").height()){
-						style = ' style="top:-82px"';
+					if($parent.height()+$parent.position().top+130>$(".zxg-bd").height()){
+						style = ' style="top:-120px"';
 					}
 					var str = '<div class="trendImg"' + style + '><img src="'+imgUrl+'?'+Math.random()+'" alt="" /></div>';
 					$el.append(str);					

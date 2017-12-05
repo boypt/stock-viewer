@@ -13,5 +13,5 @@
    "manifest_version": 2,
    "name": "股票小助手",
    "permissions": [ "storage", "http://*.gtimg.cn/*" ],
-   "version": "1.9.0"
+   "version": "1.9.1"
 }
