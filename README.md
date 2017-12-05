@@ -1,6 +1,8 @@
 # 股票小助手 Chrome 插件
 
-此插件的数据API采用的是腾讯的股票数据源。
+[从Chrome商店安装](https://chrome.google.com/webstore/detail/股票小助手/fgapjjkffggllllignindphnioliplok)
+
+此插件采用腾讯股票数据源。
 
 ## Features
 
