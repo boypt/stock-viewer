@@ -84,7 +84,7 @@
 	})();
 
 
-	var baseSugUrl = 'http://smartbox.gtimg.cn/s3/?t=all';
+	var baseSugUrl = 'https://smartbox.gtimg.cn/s3/?t=all';
 	var localBaseSugUrl = localStorage.getItem('stock_sugUrl');
 	if(localBaseSugUrl && localBaseSugUrl != 'undefined'){
 		baseSugUrl = localBaseSugUrl;
